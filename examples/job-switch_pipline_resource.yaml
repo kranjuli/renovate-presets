@@ -1,0 +1,25 @@
+---
+# not a useful or even valid pipeline, do not use
+# this is purely to test renovate
+
+include:
+  # test evita pipeline update (minor)
+  # bundles/lint_default
+  - https://your.url.to.resoure.com:443/artifactory/your-pipeline-generic-release-local/release/bundles/lint_default/6.1.0.0-20250314145426-a25bdc2.yaml
+  - https://your.url.to.resoure.com/artifactory/your-pipeline-generic-release-local/resolved/release/bundles/lint_default/6.1.4.0-20250328114820-c551dc7.yaml
+  # jobs:
+  # job lint_merge_request
+  - https://your.url.to.resoure.com/artifactory/your-pipeline-generic-release-local/release/jobs/lint_merge_request/1.3.0.0-20250314104202-fca0539.yaml
+  - https://your.url.to.resoure.com/artifactory/your-pipeline-generic-release-local/resolved/release/jobs/lint_merge_request/1.3.0.0-20250314104202-fca0539.yaml
+  # job lint_renovate_config
+  - https://your.url.to.resoure.com/artifactory/your-pipeline-generic-release-local/release/jobs/lint_renovate_config/1.0.2.0-20250314144453-aaa41c7.yaml
+  - https://your.url.to.resoure.com/artifactory/your-pipeline-generic-release-local/resolved/release/jobs/lint_renovate_config/1.0.2.0-20250314144453-aaa41c7.yaml
+dummy-job:
+  image: your.url.to.resoure.com/ansible-alpine:2.0.0.91@sha256:9aa0469ad122a3c9984abf3146fe1578973ee25a88f5a5bdefb8d550b6f41780
+  stage: test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "web"
+  tags:
+    - labor
+  script:
+    - echo "hello world"
