@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": "^customization\\/user_config\\/[^/]+\\/artifactory\\.ya?ml$",
+      "description": "Update deb package in artifactory.yml",
+      "matchStrings": [
+        "https:\\/\\/jfrog\\.tech\\.rz\\.com(:443)?\\/artifactory\\/(?<artifactRepository>.*?)\\/(?<osName>.*?)\\/(?<osVersion>.*?)\\/(?<artifactNamespace>.*?)-(?<artifactName>.*?)_(?<currentValue>.*?)_amd64\\.deb"
+      ],
+      "packageNameTemplate": "{{{osName}}}/{{{osVersion}}}",
+      "extractVersionTemplate": "{{{artifactNamespace}}}-{{{artifactName}}}_(?<version>.*?)_amd64\\.deb",
+      "depNameTemplate": "{{{artifactNamespace}}}-{{{artifactName}}}",
+      "registryUrlTemplate": "https://jfrog.tech.rz.com/artifactory/{{{artifactRepository}}}/",
+      "datasourceTemplate": "artifactory",
+      "versioningTemplate": "loose"
+    }
+  ]
+}
