@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "This configuration switches the artifact of pipeline jobs from the release channel to the canary channel",
+      "fileMatch": [
+        "^.gitlab-ci.yml$",
+        "^(product||bundle||job||job-template||reference||stage)-.*\\.yaml$"
+      ],
+      "matchStrings": [
+        "https:\\/\\/your\\.url\\.to\\.resource\\.com(:443)?\\/artifactory\\/(?<pipelineRepository>your-pipeline-generic-release-local\\/?.*?)\\/(?<releaseChannel>.*?)\\/(?<packageName>(jobs|bundles)\\/.*?)\\/(?<currentValue>.*?)\\.yaml"
+      ],
+      "extractVersionTemplate": "(?<version>.*?)\\.yaml",
+      "depNameTemplate": "{{{pipelineRepository}}}/{{#if (containsString releaseChannel 'release')}}canary{{else}}{{{releaseChannel}}}{{/if}}/{{{packageName}}}",
+      "packageNameTemplate":"{{{packageName}}}",
+      "depTypeTemplate": "pipelines",
+      "registryUrlTemplate": "https://your.url.to.resoure.com/artifactory/{{{pipelineRepository}}}/{{#if (containsString releaseChannel 'release')}}canary{{else}}{{{releaseChannel}}}{{/if}}/",
+      "autoReplaceStringTemplate": "https://your.url.to.resoure.com/artifactory/{{{depName}}}/{{{newValue}}}.yaml",
+      "datasourceTemplate": "artifactory",
+      "versioningTemplate": "loose"
+    }
+  ]
+}
