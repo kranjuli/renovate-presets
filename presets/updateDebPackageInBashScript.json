@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "customManagers": [
+    {
+      "customType": "regex",
+       "description": "Update deb package in bash script",
+      "fileMatch": [
+        "^examples\\/user_scripts\\/[^/]+\\.sh$"
+      ],
+      "matchStrings": [
+        "#\\s*renovate:\\s*datasource=(?<datasource>.*?) artifactNamespace=(?<artifactNamespace>.*?) artifactName=(?<artifactName>.*?)( versioning=(?<versioning>.*?))?\\s.+_VERSION=\"?(?<currentValue>.*?)\"?\\s"
+      ],
+      "packageNameTemplate": "{{{artifactNamespace}}}/{{{artifactName}}}",
+      "depNameTemplate": "{{{artifactNamespace}}}/{{{artifactName}}}",
+      "extractVersionTemplate": "({{{artifactName}}}-|v)?(?<version>.*)$",
+      "versioningTemplate": "{{#if versioning}}{{versioning}}{{else}}semver-coerced{{/if}}"
+    }
+  ]
+}
